@@ -3,4 +3,5 @@ from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Test Page.")
+    client_ip = request.META.get('REMOTE_ADDR')
+    return HttpResponse("Test Page. Client IP: %s" % client_ip)
