@@ -1,5 +1,5 @@
 """
-WSGI config for privacyprojectOUT project.
+WSGI config for privacyproject project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
