@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-f5k$j%6p1ijswn^y-^r2ytko_har4+p$z73+1(eiz=h^8&)rvs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['privacyproject-3910746e6c2f.herokuapp.com/ ', '127.0.0.1']
+ALLOWED_HOSTS = ['privacyproject-3910746e6c2f.herokuapp.com/ ','privacyproject-3910746e6c2f.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -125,6 +125,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
 
 
 # Default primary key field type
