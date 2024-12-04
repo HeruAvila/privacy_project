@@ -12,26 +12,30 @@
     <div style="text-align:center">
         <h1>Ans & Heru's Privacy Project</h1>
     </div>
-    <div style="text-align:left">
-        <h2>Client Info</h2>
-        <ul class="list-group list-group-light">
+    <div style="text-align:center">
+        <div style="text-align:left; margin:10px;border-radius:15px;max-width:400px;">
+            <h2>Client Info</h2>
+            <ul class="list-group list-group-light">
             {% for key, value in json_info.items %}
-            <li class="list-group-item">{{key}}: {{value}}</li>
+                <li class="list-group-item">{{key}}: {{value}}</li>
             {% endfor %}
-        </ul>
-        <h2>Browser Information:</h2>
-        <ul class="list-group list-group-light">
-            <li class="list-group-item"><b>Browser:</b> {{ browser_info.browser.family }}</li>
-            <li class="list-group-item"><b>Browser Version:</b> {{ browser_info.browser.version_string }}</li>
-            <li class="list-group-item"><b>Operating System:</b> {{ browser_info.os.family }}</li>
-            <li class="list-group-item"><b>OS Version:</b> {{ browser_info.os.version_string }}</li>
-            <li class="list-group-item"><b>Device:</b> {{ browser_info.device.family }}</li>
-        </ul>
+            </ul>
+        </div>
+        <div style="text-align:left; margin:10px;border-radius:15px;max-width:400px;">
+            <h2>Browser Information:</h2>
+            <ul class="list-group list-group-light">
+                <li class="list-group-item"><b>Browser:</b> {{ browser_info.browser.family }}</li>
+                <li class="list-group-item"><b>Browser Version:</b> {{ browser_info.browser.version_string }}</li>
+                <li class="list-group-item"><b>Operating System:</b> {{ browser_info.os.family }}</li>
+                <li class="list-group-item"><b>OS Version:</b> {{ browser_info.os.version_string }}</li>
+                <li class="list-group-item"><b>Device:</b> {{ browser_info.device.family }}</li>
+            </ul>
+        </div>
     </div>
     {% if tor_in_use %}
-    <div style="text-align:center; padding:10px; border-radius:15px;max-width:200px;width:100%" class="bg-danger">
+    <div style="text-align:center; padding:10px; border-radius:15px;max-width:200px;" class="bg-danger">
         {% else %}
-        <div style="text-align:center; padding: 10px; border-radius:15px;max-width:200px;width:100%" class="bg-primary">
+        <div style="text-align:center; padding: 10px; border-radius:15px;max-width:200px;" class="bg-primary">
         {% endif %}
         <h2 style="color:white">Tor</h2>
         {% if tor_in_use %}
