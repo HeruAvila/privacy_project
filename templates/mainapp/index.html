@@ -5,6 +5,21 @@
     <title>Privacy Project</title>
 </head>
 <body>
-
+    <div>
+        <h2>Client Info</h2>
+        <ul>
+            {% for key, value in json_info.items %}
+            <li>{{key}}: {{value}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <h2>Tor</h2>
+        {% if tor_in_use %}
+        <p>You are using Tor.</p>
+        {% else %}
+        <p>You are not using Tor.</p>
+        {% endif %}
+    </div>
 </body>
 </html>
