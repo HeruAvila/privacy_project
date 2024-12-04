@@ -9,19 +9,19 @@
     <title>Privacy Project</title>
 </head>
 <body style="text-align:center;justify-content:center;align-items:center;">
-    <div style="text-align:center">
+    <div style="text-align:left;padding-left:20px">
         <h1>Ans & Heru's Privacy Project</h1>
     </div>
     <div style="text-align:center;justify-content:center;align-items:center">
-        <div style="text-align:left; margin:10px;border-radius:15px;max-width:400px;display:inline-block">
-            <h2>Client Info</h2>
+        <div style="text-align:left; margin:15px;border-radius:15px;max-width:400px;display:inline-block">
+            <h2>Client Info:</h2>
             <ul class="list-group list-group-light">
             {% for key, value in json_info.items %}
-                <li class="list-group-item">{{key}}: {{value}}</li>
+                <li class="list-group-item"><b>{{key}}:</b> {{value}}</li>
             {% endfor %}
             </ul>
         </div>
-        <div style="text-align:left; margin:10px;border-radius:15px;max-width:400px;display:inline-block">
+        <div style="text-align:left; margin:15px;border-radius:15px;max-width:400px;display:inline-block">
             <h2>Browser Information:</h2>
             <ul class="list-group list-group-light">
                 <li class="list-group-item"><b>Browser:</b> {{ browser_info.browser.family }}</li>
@@ -38,7 +38,7 @@
         {% else %}
         <div style="text-align:center; padding:15px; margin:10px; border-radius:15px;max-width:200px;justify-content:center;align-items:center;background-color:#1a7c1a">
         {% endif %}
-        <h2 style="color:white">Tor</h2>
+        <h2 style="color:white">Tor Status:</h2>
         {% if tor_in_use %}
         <p style="color:white">You are using Tor</p>
         {% else %}
