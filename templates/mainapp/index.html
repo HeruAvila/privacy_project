@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>Privacy Project</title>
 </head>
-<body style="text-align:center;justify-content:center;align-items:center">
+<body style="text-align:center;justify-content:center;align-items:center;">
     <div style="text-align:center">
         <h1>Ans & Heru's Privacy Project</h1>
     </div>
@@ -32,10 +32,11 @@
             </ul>
         </div>
     </div>
+    <div style="text-align:center;justify-content:center;align-items:center;display:flex">
     {% if tor_in_use %}
-    <div style="text-align:center; margin:10px; border-radius:15px;max-width:200px;justify-content:center;align-items:center;background-color:#a82f2f">
+    <div style="text-align:center; padding:15px; margin:10px; border-radius:15px;max-width:200px;justify-content:center;align-items:center;background-color:#a82f2f">
         {% else %}
-        <div style="text-align:center; padding: 10px; border-radius:15px;max-width:200px;justify-content:center;align-items:center;background-color:#1a7c1a">
+        <div style="text-align:center; padding:15px; margin:10px; border-radius:15px;max-width:200px;justify-content:center;align-items:center;background-color:#1a7c1a">
         {% endif %}
         <h2 style="color:white">Tor</h2>
         {% if tor_in_use %}
@@ -44,5 +45,6 @@
         <p style="color:white">You are not using Tor</p>
         {% endif %}
         </div></div>
+    </div>
 </body>
 </html>
