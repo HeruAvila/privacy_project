@@ -12,6 +12,14 @@
             <li>{{key}}: {{value}}</li>
             {% endfor %}
         </ul>
+        <h2>Browser Information:</h2>
+        <ul>
+            <li><b>Browser:</b> {{ browser_info.browser.family }}</li>
+            <li><b>Browser Version:</b> {{ browser_info.browser.version_string }}</li>
+            <li><b>Operating System:</b> {{ browser_info.os.family }}</li>
+            <li><b>OS Version:</b> {{ browser_info.os.version_string }}</li>
+            <li><b>Device:</b> {{ browser_info.device.family }}</li>
+        </ul>
     </div>
     <div>
         <h2>Tor</h2>

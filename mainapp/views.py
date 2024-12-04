@@ -1,7 +1,11 @@
 import requests
-from django.http import HttpResponse
 from django.shortcuts import render
-
+from user_agents import parse
+def get_browser_info(request):
+    #citation: https://stackoverflow.com/questions/2669294/how-to-detect-browser-type-in-django
+    browser_info = request.META.get('HTTP_USER_AGENT')
+    parsed = parse(browser_info)
+    return parsed
 def get_ClientIP(request):
     #citation: https://stackoverflow.com/questions/4581789/how-do-i-get-user-ip-address-in-django
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -47,32 +51,13 @@ def index(request):
     tor_list = getTorExits()
     tor_in_use = using_tor(client_IP, tor_list)
     json_info = get_ipinfo(client_IP)
+    browser_info = get_browser_info(request)
+    return render(request, 'mainapp/index.html',
+                  context={'tor_in_use': tor_in_use,
+                           'json_info': json_info,
+                           'browser_info':browser_info,
+                           })
 
-    return render(request, 'mainapp/index.html', context={'tor_in_use': tor_in_use, 'json_info': json_info})
-
-    # if tor_in_use:
-    #     return HttpResponse(f"You are using Tor. Client IP: {client_IP}")
-    # else:
-    #     return HttpResponse(f"Your IP: {client_IP}")
-
-
-# x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-   # if x_forwarded_for:
-   #     client_ip = x_forwarded_for.split(',')[0]
-   # else:
-   #     client_ip = request.META.get('REMOTE_ADDR')
-   # ip_api_url = 'http://ip-api.com/json/%s' % client_ip
-   # info_json = {}
-   # try:
-   #     ip_response = requests.get(ip_api_url)
-
-   #     if ip_response.status_code == 200:
-   #         info_json = ip_response.json()
-   #         print(info_json)
-   #     else:
-   #         print('Error: ', ip_response.status_code)
-   # finally:
-   #     return HttpResponse("Test Page. Client IP: %s" % client_ip)
 
 
 
