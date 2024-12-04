@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'privacyprojectOUT.wsgi.application'
+WSGI_APPLICATION = 'privacyproject.wsgi.application'
 
 
 # Database
