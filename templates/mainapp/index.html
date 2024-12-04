@@ -12,8 +12,8 @@
     <div style="text-align:center">
         <h1>Ans & Heru's Privacy Project</h1>
     </div>
-    <div style="text-align:center">
-        <div style="text-align:left; margin:10px;border-radius:15px;max-width:400px;">
+    <div style="text-align:center;justify-content:center;align-items:center">
+        <div style="text-align:left; margin:10px;border-radius:15px;max-width:400px;display:inline-block">
             <h2>Client Info</h2>
             <ul class="list-group list-group-light">
             {% for key, value in json_info.items %}
@@ -21,7 +21,7 @@
             {% endfor %}
             </ul>
         </div>
-        <div style="text-align:left; margin:10px;border-radius:15px;max-width:400px;">
+        <div style="text-align:left; margin:10px;border-radius:15px;max-width:400px;display:inline-block">
             <h2>Browser Information:</h2>
             <ul class="list-group list-group-light">
                 <li class="list-group-item"><b>Browser:</b> {{ browser_info.browser.family }}</li>
@@ -33,9 +33,9 @@
         </div>
     </div>
     {% if tor_in_use %}
-    <div style="text-align:center; padding:10px; border-radius:15px;max-width:200px;" class="bg-danger">
+    <div style="text-align:center; padding:10px; border-radius:15px;max-width:200px;justify-content:center;align-items:center" class="bg-danger">
         {% else %}
-        <div style="text-align:center; padding: 10px; border-radius:15px;max-width:200px;" class="bg-primary">
+        <div style="text-align:center; padding: 10px; border-radius:15px;max-width:200px;justify-content:center;align-items:center" class="bg-primary">
         {% endif %}
         <h2 style="color:white">Tor</h2>
         {% if tor_in_use %}
