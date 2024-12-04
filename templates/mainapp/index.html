@@ -1,11 +1,18 @@
 <!DOCTYPE html>
+
+{% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+{%bootstrap_messages %} {% load static %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Privacy Project</title>
 </head>
 <body>
-    <div>
+    <div style="text-align:center">
+        <h1>Ans & Heru's Privacy Project</h1>
+    </div>
+    <div style="text-align:center">
         <h2>Client Info</h2>
         <ul>
             {% for key, value in json_info.items %}
@@ -21,12 +28,12 @@
             <li><b>Device:</b> {{ browser_info.device.family }}</li>
         </ul>
     </div>
-    <div>
+    <div style="text-align:center" class="bg-dark">
         <h2>Tor</h2>
         {% if tor_in_use %}
-        <p>You are using Tor.</p>
+        <p>You are using <span class="bg-danger">Tor</span></p>
         {% else %}
-        <p>You are not using Tor.</p>
+        <p>You are not using <span class="bg-primary">Tor</span></p>
         {% endif %}
     </div>
 </body>
