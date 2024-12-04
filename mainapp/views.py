@@ -18,7 +18,6 @@ def index(request):
         if ip_response.status_code == 200:
             info_json = ip_response.json()
             print(info_json)
-
         else:
             print('Error: ', ip_response.status_code)
     finally:
