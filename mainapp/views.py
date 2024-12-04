@@ -44,7 +44,27 @@ def get_ipinfo(client_ip):
         else:
             print('Error: ', ip_response.status_code)
     finally:
-        return info_json
+        filtered_json = {}
+        for key in info_json.keys():
+            if key == "country":
+                filtered_json.update({'Country': info_json[key]})
+            elif key == "regionName":
+                filtered_json.update({'Region Name': info_json[key]})
+            elif key == "city":
+                filtered_json.update({'City': info_json[key]})
+            elif key == "zip":
+                filtered_json.update({'Zip': info_json[key]})
+            elif key == "lat":
+                filtered_json.update({'Latitude': info_json[key]})
+            elif key == "lon":
+                filtered_json.update({'Longitude': info_json[key]})
+            elif key == "timezone":
+                filtered_json.update({'Timezone': info_json[key]})
+            elif key == "isp":
+                filtered_json.update({'ISP': info_json[key]})
+            elif key == "query":
+                filtered_json.update({'IP': info_json[key]})
+        return filtered_json
 
 def index(request):
     client_IP = get_ClientIP(request)
