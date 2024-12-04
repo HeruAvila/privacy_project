@@ -48,7 +48,7 @@ def index(request):
     tor_in_use = using_tor(client_IP, tor_list)
     json_info = get_ipinfo(client_IP)
 
-    return render(request, 'mainapp/index', tor_in_use, json_info)
+    return render(request, 'templates/mainapp/index', tor_in_use, json_info)
 
     # if tor_in_use:
     #     return HttpResponse(f"You are using Tor. Client IP: {client_IP}")
