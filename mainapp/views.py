@@ -82,9 +82,9 @@ def index(request):
     last_visit = request.COOKIES.get('last_visit', 'First time visiting')
 
     #making a location for cookies
-    location = json_info.get('city','N/A')
-    location += ', '+json_info.get('regionName','N/A')
-    location += ', '+json_info.get('country','N/A')
+    location = json_info.get('city','Unknown')
+    location += ', '+json_info.get('regionName','Unknown')
+    location += ', '+json_info.get('country','Unknown')
 
     current_location = location
     last_location = request.COOKIES.get('last_location','First time visiting')
@@ -103,7 +103,7 @@ def index(request):
     #https://stackoverflow.com/questions/17057536/how-to-set-cookie-and-render-template-in-django
     response.set_cookie('visit_count', visit_count)
     response.set_cookie('last_visit', current_date)
-    response.set_cookie('last_location',last_location)
+    response.set_cookie('last_location',current_location)
 
     return response
 
