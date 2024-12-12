@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import requests
 from django.shortcuts import render
 from user_agents import parse
@@ -67,16 +69,43 @@ def get_ipinfo(client_ip):
         return filtered_json
 
 def index(request):
+    current_date = datetime.now()
     client_IP = get_ClientIP(request)
     tor_list = getTorExits()
     tor_in_use = using_tor(client_IP, tor_list)
     json_info = get_ipinfo(client_IP)
     browser_info = get_browser_info(request)
-    return render(request, 'mainapp/index.html',
-                  context={'tor_in_use': tor_in_use,
-                           'json_info': json_info,
-                           'browser_info':browser_info,
-                           })
+
+    #adding 1 to the vists and defaulting it to 0 if no visit
+    visit_count = int(request.COOKIES.get('visit_count',0))+1
+    #getting last visit date, if none then givign first time message
+    last_visit = request.COOKIES.get('last_visit', 'First time visiting')
+
+    #making a location for cookies
+    location = json_info.get('city','N/A')
+    location += ', '+json_info.get('regionName','N/A')
+    location += ', '+json_info.get('country','N/A')
+
+    current_location = location
+    last_location = request.COOKIES.get('last_location','First time visiting')
+
+    context = {
+        'tor_in_use': tor_in_use,
+        'json_info': json_info,
+        'browser_info': browser_info,
+        'visit_count': visit_count,
+        'last_visit': last_visit,
+        'current_location': current_location,
+        'last_location': last_location,
+    }
+
+    response = render(request, 'mainapp/index.html', context=context)
+    #https://stackoverflow.com/questions/17057536/how-to-set-cookie-and-render-template-in-django
+    response.set_cookie('visit_count', visit_count)
+    response.set_cookie('last_visit', current_date)
+    response.set_cookie('last_location',last_location)
+
+    return response
 
 
 
