@@ -82,9 +82,9 @@ def index(request):
     last_visit = request.COOKIES.get('last_visit', 'First time visiting')
 
     #making a location for cookies
-    location = json_info.get('city','Unknown')
-    location += ', '+json_info.get('regionName','Unknown')
-    location += ', '+json_info.get('country','Unknown')
+    location = json_info.get('City','Unknown')
+    location += ', '+json_info.get('Region Name','Unknown')
+    location += ', '+json_info.get('Country','Unknown')
 
     current_location = location
     last_location = request.COOKIES.get('last_location','First time visiting')
