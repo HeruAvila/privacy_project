@@ -146,14 +146,18 @@ def check_browser_version(browser_info):
     print("cur_browser: ", curr_browser)
     print("cur_name: ", curr_name)
     up_to_date_bool = False
-    if curr_name == "Firefox" and curr_browser == up_to_date_json['firefox']['engine_version']:
-        up_to_date_bool = True
-    elif curr_name == "Chrome" and curr_browser == up_to_date_json['chrome']['engine_version']:
-        up_to_date_bool = True
-    elif curr_name == "Edge" and curr_browser == up_to_date_json['edge']['engine_version']:
-        up_to_date_bool = True
-    elif curr_name == "Safari" and curr_browser == up_to_date_json['safari']['engine_version']:
-        up_to_date_bool = True
+    if curr_name == "Firefox":
+        if curr_browser == up_to_date_json['firefox']['engine_version']:
+            up_to_date_bool = True
+    elif curr_name == "Chrome":
+        if curr_browser == up_to_date_json['chrome']['engine_version']:
+            up_to_date_bool = True
+    elif curr_name == "Edge":
+        if curr_browser == up_to_date_json['edge']['engine_version']:
+            up_to_date_bool = True
+    elif curr_name == "Safari":
+        if curr_browser == up_to_date_json['safari']['engine_version']:
+            up_to_date_bool = True
     else:
         return False, "We can't detect if your browser version is up to date. Make sure you're Browser is the latest version!"
 
