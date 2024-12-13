@@ -78,10 +78,13 @@ def cookie_setter(response, visit_count, current_location, current_date,home_loc
     response.set_cookie('last_location', current_location,60*60*24*90)
 
 
-    response.set_cookie('home_location',home_location,60*2)
-    #This will idealy be 12 hours or more but since we are going to do a demo we will keep it at 2 minutes.
+    response.set_cookie('home_location',home_location,60*60*12)
 
-
+#For VPN checking, we are using location. Whenever a user visits the website for the first time we save there location into
+# "home location". Then everytime the user visits the website again, we check there location with the saved "home location"
+# which is saved in cookies. If the user is in a different city, but same region and country then we treat this as VPN not
+# being used. If the user is in a different region and same country or just entirely different country we treat it as VPN
+# being used. We are currently allowing the home location to be reset every 12 hours, just incase someone is traveling.
 def vpn_checker(current_location, home_location,visit_count):
     vpn_used = False
     print("Current Location: "+current_location)
