@@ -169,7 +169,8 @@ def check_browser_version(browser_info):
     if up_to_date_bool:
         return False, "Your Browser version is up to date! Good Job!"
     else:
-        return True, "Your Browser version is not up to date :(. Latest Version: ", needed_ver
+        s = "Your Browser version is not up to date :(. Latest Version: %s" % needed_ver
+        return True, s
 
 def index(request):
     current_date = datetime.now()
