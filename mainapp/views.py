@@ -78,6 +78,9 @@ def cookie_setter(response, visit_count, current_location, current_date):
 
 def vpn_checker(current_location, last_location,visit_count):
     vpn_used = False
+    print("Current Location: "+current_location)
+    print("Last Location: "+last_location)
+    print("Visit Count: ",visit_count)
     if(current_location == last_location or visit_count == 1):
         if(visit_count == 1):
             vpn_used = False
@@ -87,7 +90,9 @@ def vpn_checker(current_location, last_location,visit_count):
             return (vpn_used,'VPN is not being used. Same location detected as last time.')
     else:
         c_city, c_region, c_country = current_location.split(',')
+        print("Current City,Region,Country: "+c_city+", "+c_region+", "+c_country)
         l_city, l_region, l_country = last_location.split(',')
+        print("Last City,Region,Country: "+l_city+", "+l_region+", "+l_country)
         if(c_city != l_city and c_region == l_region and c_country == l_country):
             vpn_used = False
             return (vpn_used, 'We detected a different city than your previous visits but will not treat this as a VPN usage since the region and country have not changed.')
@@ -98,8 +103,7 @@ def vpn_checker(current_location, last_location,visit_count):
             vpn_used = True
             return (vpn_used, 'We have detected a different country of vist than before and will treat this as a VPN use.')
 
-
-
+    return (vpn_used, 'Unable to determine VPN usage based on the provided data.')
 
 
 def index(request):
