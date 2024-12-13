@@ -7,6 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Privacy Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body style="text-align:center;justify-content:center;align-items:center;">
 
@@ -45,21 +47,29 @@
         </div>
     </div>
 
-    <div style="text-align:center;justify-content:center;align-items:center;display:flex">
-    {% if tor_in_use %}
-    <div style="text-align:center; padding:15px; margin:10px; border-radius:15px;max-width:200px;justify-content:center;align-items:center;background-color:#a82f2f">
-        {% else %}
-        <div style="text-align:center; padding:15px; margin:10px; border-radius:15px;max-width:200px;justify-content:center;align-items:center;background-color:#1a7c1a">
-        {% endif %}
-        <h2 style="color:white">Tor Status:</h2>
-        {% if tor_in_use %}
-        <p style="color:white">You are using Tor</p>
-        {% else %}
-        <p style="color:white">You are not using Tor</p>
-        {% endif %}
-        </div></div>
+    <div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; text-align: center;">
+    <div style="padding: 15px; margin: 10px; border-radius: 15px; max-width: 200px; background-color: {% if tor_in_use %}Crimson{% else %}LimeGreen{% endif %};">
+        <h2 style="color: white;">Tor Status:</h2>
+        <p style="color: white;">{% if tor_in_use %}You are using Tor{% else %}You are not using Tor{% endif %}</p>
     </div>
 
+    <div style="padding: 15px; margin: 10px; border-radius: 15px; max-width: 200px; background-color: {% if vpn_status %}Crimson{% else %}LimeGreen{% endif %};">
+        <h2 style="color: white;">VPN Status:</h2>
+        <p style="color: white;">{{ vpn_message }}</p>
+    </div>
+</div>
+
+    <footer class="footer fixed-bottom">
+        <div class="alert alert-danger" role="alert">
+              <h3 class="alert-heading">&copy; 2024 Ans Shaukat and Heru Avila. All rights reserved.</h3>
+              <p>
+                  Disclaimer:This website is a class project and we use cookies to track your location,
+                  date of visit, number of visits and other information. We are not responsible for any
+                  harm that may be caused from you visiting this website.
+              </p>
+
+        </div>
+    </footer>
 
 </body>
 </html>

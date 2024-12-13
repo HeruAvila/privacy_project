@@ -68,6 +68,40 @@ def get_ipinfo(client_ip):
                 filtered_json.update({'IP': info_json[key]})
         return filtered_json
 
+
+def cookie_setter(response, visit_count, current_location, current_date):
+    # https://stackoverflow.com/questions/17057536/how-to-set-cookie-and-render-template-in-django
+    response.set_cookie('visit_count', visit_count)
+    response.set_cookie('last_visit', current_date)
+    response.set_cookie('last_location', current_location)
+
+
+def vpn_checker(current_location, last_location,visit_count):
+    vpn_used = False
+    if(current_location == last_location or visit_count == 1):
+        if(visit_count == 1):
+            vpn_used = False
+            return (vpn_used, 'First time visiting. You current location has been saved and will be used later on to detect VPN usage.')
+        else:
+            vpn_used = False
+            return (vpn_used,'VPN is not being used. Same location detected as last time.')
+    else:
+        c_city, c_region, c_country = current_location.split(',')
+        l_city, l_region, l_country = last_location.split(',')
+        if(c_city != l_city and c_region == l_region and c_country == l_country):
+            vpn_used = False
+            return (vpn_used, 'We detected a different city than your previous visits but will not treat this as a VPN usage since the region and country have not changed.')
+        elif(c_region != l_region and c_country == l_country):
+            vpn_used = True
+            return (vpn_used, 'We have detected a different Region and same country, but we are treating this as VPN use. This may happen if you are traveling.')
+        elif (c_country == l_country):
+            vpn_used = True
+            return (vpn_used, 'We have detected a different country of vist than before and will treat this as a VPN use.')
+
+
+
+
+
 def index(request):
     current_date = datetime.now()
     client_IP = get_ClientIP(request)
@@ -89,6 +123,8 @@ def index(request):
     current_location = location
     last_location = request.COOKIES.get('last_location','First time visiting')
 
+    vpn_status, vpn_message = vpn_checker(current_location,last_location,visit_count)
+
     context = {
         'tor_in_use': tor_in_use,
         'json_info': json_info,
@@ -97,13 +133,13 @@ def index(request):
         'last_visit': last_visit,
         'current_location': current_location,
         'last_location': last_location,
+        'vpn_status':vpn_status,
+        'vpn_message': vpn_message,
     }
 
     response = render(request, 'mainapp/index.html', context=context)
-    #https://stackoverflow.com/questions/17057536/how-to-set-cookie-and-render-template-in-django
-    response.set_cookie('visit_count', visit_count)
-    response.set_cookie('last_visit', current_date)
-    response.set_cookie('last_location',current_location)
+
+    cookie_setter(response,visit_count,current_location,current_date)
 
     return response
 
