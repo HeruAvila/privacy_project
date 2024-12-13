@@ -71,9 +71,9 @@ def get_ipinfo(client_ip):
 
 def cookie_setter(response, visit_count, current_location, current_date):
     # https://stackoverflow.com/questions/17057536/how-to-set-cookie-and-render-template-in-django
-    response.set_cookie('visit_count', visit_count)
-    response.set_cookie('last_visit', current_date)
-    response.set_cookie('last_location', current_location)
+    response.set_cookie('visit_count', visit_count,60*60*24*90) #exp in 90 days
+    response.set_cookie('last_visit', current_date,60*60*24*90)
+    response.set_cookie('last_location', current_location,60*60*24*90)
 
 
 def vpn_checker(current_location, last_location,visit_count):
