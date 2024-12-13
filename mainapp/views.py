@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import requests
+from django.http import HttpResponse
 from django.shortcuts import render
 from user_agents import parse
 def get_browser_info(request):
@@ -104,6 +105,29 @@ def vpn_checker(current_location, last_location,visit_count):
             return (vpn_used, 'We have detected a different country of vist than before and will treat this as a VPN use.')
 
     return (vpn_used, 'Unable to determine VPN usage based on the provided data.')
+
+def us_only(request):
+    client_IP = get_ClientIP(request)
+    json_info = get_ipinfo(client_IP)
+    country = json_info.get('Country','Unknown')
+
+    print(country)
+
+    if(country == 'United States'):
+        return render(request, 'mainapp/us_only.html')
+    else:
+        return HttpResponse("Access Denied: This page is only accessible from within the US.")
+
+def non_us(request):
+    client_IP = get_ClientIP(request)
+    json_info = get_ipinfo(client_IP)
+    country = json_info.get("Country")
+
+    if(country != 'United States'):
+        return render(request, 'mainapp/non_us.html')
+    else:
+        return HttpResponse("Access Denied: This page is only accessible from outside the US.")
+
 
 
 def index(request):
