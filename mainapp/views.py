@@ -76,7 +76,10 @@ def cookie_setter(response, visit_count, current_location, current_date,home_loc
     response.set_cookie('visit_count', visit_count,60*60*24*90) #exp in 90 days
     response.set_cookie('last_visit', current_date,60*60*24*90)
     response.set_cookie('last_location', current_location,60*60*24*90)
-    response.set_cookie('home_location',home_location,60*2) #set homelocation for 12 hours
+
+
+    response.set_cookie('home_location',home_location,60*2)
+    #This will idealy be 12 hours or more but since we are going to do a demo we will keep it at 2 minutes.
 
 
 def vpn_checker(current_location, home_location,visit_count):

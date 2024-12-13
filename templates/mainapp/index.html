@@ -56,7 +56,8 @@
                 <li class="list-group-item"><b>Number of Visits:</b> {{ visit_count }}</li>
                 <li class="list-group-item"><b>Last Visit:</b> {{ last_visit }}</li>
                 <li class="list-group-item"><b>Last Visit Location:</b> {{ last_location }}</li>
-                <li class="list-group-item"><b>Home Location:</b> {{ home_location }}</li>
+                <li class="list-group-item"><b>Home Location:</b>
+                    {% if home_location is none %} Setting your Home location to current location {% else %} {{ home_location }} {% endif %}</li>
 
             </ul>
         </div>
