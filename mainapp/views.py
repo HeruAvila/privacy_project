@@ -146,17 +146,22 @@ def check_browser_version(browser_info):
     print("cur_browser: ", curr_browser)
     print("cur_name: ", curr_name)
     up_to_date_bool = False
+    needed_ver = 0
     if curr_name == "Firefox":
-        if curr_browser == up_to_date_json['firefox']['engine_version']:
+        needed_ver = up_to_date_json['firefox']['engine_version']
+        if curr_browser == needed_ver:
             up_to_date_bool = True
     elif curr_name == "Chrome":
-        if curr_browser == up_to_date_json['chrome']['engine_version']:
+        needed_ver = up_to_date_json['chrome']['engine_version']
+        if curr_browser == needed_ver:
             up_to_date_bool = True
     elif curr_name == "Edge":
-        if curr_browser == up_to_date_json['edge']['engine_version']:
+        needed_ver = up_to_date_json['edge']['engine_version']
+        if curr_browser == needed_ver:
             up_to_date_bool = True
     elif curr_name == "Safari":
-        if curr_browser == up_to_date_json['safari']['engine_version']:
+        needed_ver = up_to_date_json['safari']['engine_version']
+        if curr_browser == needed_ver:
             up_to_date_bool = True
     else:
         return False, "We can't detect if your browser version is up to date. Make sure you're Browser is the latest version!"
@@ -164,7 +169,7 @@ def check_browser_version(browser_info):
     if up_to_date_bool:
         return False, "Your Browser version is up to date! Good Job!"
     else:
-        return True, "Your Browser version is not up to date :(. You might be vulnerable!"
+        return True, "Your Browser version is not up to date :(. Latest Version: ", needed_ver
 
 def index(request):
     current_date = datetime.now()
