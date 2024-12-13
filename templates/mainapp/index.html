@@ -72,6 +72,10 @@
         <h2 style="color: white;">VPN Status:</h2>
         <p style="color: white;">{{ vpn_message }}</p>
     </div>
+        <div style="padding: 15px; margin: 10px; border-radius: 15px; max-width: 200px; background-color: {% if browser_bool %}Crimson{% else %}LimeGreen{% endif %};">
+        <h2 style="color: white;">Browser Status:</h2>
+        <p style="color: white;">{{ browser_message }}</p>
+    </div>
 </div>
 
     <footer>

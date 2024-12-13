@@ -139,6 +139,29 @@ def no_tor(request):
         return HttpResponse("Access Denied: You are using TOR, this page can only be accessed when you are not using TOR.")
 
 
+def check_browser_version(browser_info):
+    up_to_date_json = requests.get("https://www.browsers.fyi/api/").json()
+    curr_browser = browser_info.browser.version_string.split(".")[0]
+    curr_name = browser_info.browser.family
+    print("cur_browser: ", curr_browser)
+    print("cur_name: ", curr_name)
+    up_to_date_bool = False
+    if curr_name == "Firefox" and curr_browser == up_to_date_json['firefox']['engine_version']:
+        up_to_date_bool = True
+    elif curr_name == "Chrome" and curr_browser == up_to_date_json['chrome']['engine_version']:
+        up_to_date_bool = True
+    elif curr_name == "Edge" and curr_browser == up_to_date_json['edge']['engine_version']:
+        up_to_date_bool = True
+    elif curr_name == "Safari" and curr_browser == up_to_date_json['safari']['engine_version']:
+        up_to_date_bool = True
+    else:
+        return False, "We can't detect if your browser version is up to date. Make sure you're Browser is the latest version!"
+
+    if up_to_date_bool:
+        return False, "Your Browser version is up to date! Good Job!"
+    else:
+        return True, "Your Browser version is not up to date :(. You might be vulnerable!"
+
 def index(request):
     current_date = datetime.now()
     client_IP = get_ClientIP(request)
@@ -146,6 +169,7 @@ def index(request):
     tor_in_use = using_tor(client_IP, tor_list)
     json_info = get_ipinfo(client_IP)
     browser_info = get_browser_info(request)
+    browser_version_bool, browser_version_string = check_browser_version(browser_info)
 
     #adding 1 to the vists and defaulting it to 0 if no visit
     visit_count = int(request.COOKIES.get('visit_count',0))+1
@@ -179,6 +203,8 @@ def index(request):
         'vpn_status':vpn_status,
         'vpn_message': vpn_message,
         'home_location': request.COOKIES.get('home_location'),
+        'browser_bool': browser_version_bool,
+        'browser_message': browser_version_string,
     }
 
     response = render(request, 'mainapp/index.html', context=context)
