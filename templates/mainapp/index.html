@@ -11,7 +11,7 @@
 
 </head>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href="#">Blocking Privacy</a>
+  <a class="navbar-brand" href="/">Blocking Privacy</a>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
@@ -24,7 +24,7 @@
         <a class="nav-link" href="{% url 'non_us' %}">Non US</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Non Tor</a>
+        <a class="nav-link" href="{% url 'no_tor' %}">Non Tor</a>
       </li>
     </ul>
   </div>
@@ -56,6 +56,8 @@
                 <li class="list-group-item"><b>Number of Visits:</b> {{ visit_count }}</li>
                 <li class="list-group-item"><b>Last Visit:</b> {{ last_visit }}</li>
                 <li class="list-group-item"><b>Last Visit Location:</b> {{ last_location }}</li>
+                <li class="list-group-item"><b>Home Location:</b> {{ home_location }}</li>
+
             </ul>
         </div>
     </div>

@@ -2,9 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>TOR</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+  <a class="navbar-brand" href="/">Blocking Privacy</a>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'us_only' %}">US Only</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'non_us' %}">Non US</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'no_tor' %}">Non Tor</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
+<h5>You are able to view this page because you are not using Tor!</h5>
 </body>
 </html>

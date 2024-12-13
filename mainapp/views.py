@@ -4,6 +4,7 @@ import requests
 from django.http import HttpResponse
 from django.shortcuts import render
 from user_agents import parse
+
 def get_browser_info(request):
     #citation: https://stackoverflow.com/questions/2669294/how-to-detect-browser-type-in-django
     browser_info = request.META.get('HTTP_USER_AGENT')
@@ -70,39 +71,40 @@ def get_ipinfo(client_ip):
         return filtered_json
 
 
-def cookie_setter(response, visit_count, current_location, current_date):
+def cookie_setter(response, visit_count, current_location, current_date,home_location):
     # https://stackoverflow.com/questions/17057536/how-to-set-cookie-and-render-template-in-django
     response.set_cookie('visit_count', visit_count,60*60*24*90) #exp in 90 days
     response.set_cookie('last_visit', current_date,60*60*24*90)
     response.set_cookie('last_location', current_location,60*60*24*90)
+    response.set_cookie('home_location',home_location,60*2) #set homelocation for 12 hours
 
 
-def vpn_checker(current_location, last_location,visit_count):
+def vpn_checker(current_location, home_location,visit_count):
     vpn_used = False
     print("Current Location: "+current_location)
-    print("Last Location: "+last_location)
+    print("Last Location: "+home_location)
     print("Visit Count: ",visit_count)
-    if(current_location == last_location or visit_count == 1):
+    if(current_location == home_location or visit_count == 1):
         if(visit_count == 1):
             vpn_used = False
-            return (vpn_used, 'First time visiting. You current location has been saved and will be used later on to detect VPN usage.')
+            return (vpn_used, 'First time visiting. You current location has been saved and will be used later on to detect VPN usage. This location can be updated every 12 hours.')
         else:
             vpn_used = False
-            return (vpn_used,'VPN is not being used. Same location detected as last time.')
+            return (vpn_used,'VPN is not being used. Same location detected as home location.')
     else:
         c_city, c_region, c_country = current_location.split(',')
         print("Current City,Region,Country: "+c_city+", "+c_region+", "+c_country)
-        l_city, l_region, l_country = last_location.split(',')
-        print("Last City,Region,Country: "+l_city+", "+l_region+", "+l_country)
-        if(c_city != l_city and c_region == l_region and c_country == l_country):
+        h_city, h_region, h_country = home_location.split(',')
+        print("Last City,Region,Country: "+h_city+", "+h_region+", "+h_country)
+        if(c_city != h_city and c_region == h_region and c_country == h_country):
             vpn_used = False
-            return (vpn_used, 'We detected a different city than your previous visits but will not treat this as a VPN usage since the region and country have not changed.')
-        elif(c_region != l_region and c_country == l_country):
+            return (vpn_used, 'We detected a different city than your home location but will not treat this as a VPN usage since the region and country have not changed.')
+        elif(c_region != h_region and c_country == h_country):
             vpn_used = True
-            return (vpn_used, 'We have detected a different Region and same country, but we are treating this as VPN use. This may happen if you are traveling.')
-        elif (c_country != l_country):
+            return (vpn_used, 'We have detected a different Region and same country from your home location, but we are treating this as VPN use. This may happen if you are traveling.')
+        elif (c_country != h_country):
             vpn_used = True
-            return (vpn_used, 'We have detected a different country of vist than before and will treat this as a VPN use.')
+            return (vpn_used, 'We have detected a different country of visit than your home location and will treat this as a VPN use.')
 
     return (vpn_used, 'Unable to determine VPN usage based on the provided data.')
 
@@ -127,7 +129,14 @@ def non_us(request):
         return render(request, 'mainapp/non_us.html')
     else:
         return HttpResponse("Access Denied: This page is only accessible from outside the US.")
-
+def no_tor(request):
+    client_IP = get_ClientIP(request)
+    tor_list = getTorExits()
+    tor_in_use = using_tor(client_IP, tor_list)
+    if(not tor_in_use):
+        return render(request, 'mainapp/tor.html')
+    else:
+        return HttpResponse("Access Denied: You are using TOR, this page can only be accessed when you are not using TOR.")
 
 
 def index(request):
@@ -148,10 +157,16 @@ def index(request):
     location += ', '+json_info.get('Region Name','Unknown')
     location += ', '+json_info.get('Country','Unknown')
 
+    if(visit_count == 1 or request.COOKIES.get('home_location', 'Not Set') == 'Not Set'):
+        home_location = location
+    else:
+        home_location = request.COOKIES.get('home_location')
+
+
     current_location = location
     last_location = request.COOKIES.get('last_location','First time visiting')
 
-    vpn_status, vpn_message = vpn_checker(current_location,last_location,visit_count)
+    vpn_status, vpn_message = vpn_checker(current_location,home_location,visit_count)
 
     context = {
         'tor_in_use': tor_in_use,
@@ -163,11 +178,12 @@ def index(request):
         'last_location': last_location,
         'vpn_status':vpn_status,
         'vpn_message': vpn_message,
+        'home_location': request.COOKIES.get('home_location'),
     }
 
     response = render(request, 'mainapp/index.html', context=context)
 
-    cookie_setter(response,visit_count,current_location,current_date)
+    cookie_setter(response,visit_count,current_location,current_date,home_location)
 
     return response
 
