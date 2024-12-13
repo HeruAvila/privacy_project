@@ -99,7 +99,7 @@ def vpn_checker(current_location, last_location,visit_count):
         elif(c_region != l_region and c_country == l_country):
             vpn_used = True
             return (vpn_used, 'We have detected a different Region and same country, but we are treating this as VPN use. This may happen if you are traveling.')
-        elif (c_country == l_country):
+        elif (c_country != l_country):
             vpn_used = True
             return (vpn_used, 'We have detected a different country of vist than before and will treat this as a VPN use.')
 
